@@ -7,6 +7,19 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<%= nav_bar brand: "Homework #1", brand_link: root_path  %>
+
+<%= nav_bar fixed: :top, brand: "Homework #1" do %>
+    <%= menu_group do %>
+        <%= menu_item "Categories", categories_path %>
+        <%= menu_item "Add Category", new_category_path %>
+
+        <%= menu_item "Articles", articles_path %>
+        <%= menu_item "Add Article", new_article_path %>
+    <% end %>
+<% end %>
+
+
 
 <%= yield %>
 

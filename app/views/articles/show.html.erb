@@ -3,6 +3,7 @@
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
 
+
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
   <dd><%= @article.title %></dd>
@@ -17,7 +18,7 @@
   <dt><strong><%= model_class.human_attribute_name(:user_email) %>:</strong></dt>
   <dd><%= @article.user_email %></dd>
   <dt><strong><%= model_class.human_attribute_name(:img_1) %>:</strong></dt>
-  <dd><%= @article.img_1 %></dd>
+  <dd><%= image_tag @article.img_1.url(:medium)%></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

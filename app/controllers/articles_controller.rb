@@ -1,6 +1,13 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
+  def search_articles
+    @result = Article.all.where("title like '%#{search_article_params[:title]}'")
+  end
+
+  def search_article_params
+    params.require(:article).permit(:title)
+  end
   # GET /articles
   # GET /articles.json
   def index
@@ -15,10 +22,12 @@ class ArticlesController < ApplicationController
   # GET /articles/new
   def new
     @article = Article.new
+    @categories=Category.all
   end
 
   # GET /articles/1/edit
   def edit
+    @categories = @article.categories
   end
 
   # POST /articles
@@ -26,8 +35,11 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
 
+    @categories = Category.find(params[:category_ids])
+
     respond_to do |format|
       if @article.save
+        @article.categories = @categories
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
       else
@@ -69,6 +81,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:title, :description, :price, :user_name, :user_phone, :user_email, :img_1)
+      params.require(:article).permit(:title, :description, :price, :user_name, :user_phone, :user_email, :img_1, category_ids:[])
     end
 end
